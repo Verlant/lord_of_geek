@@ -1,0 +1,3 @@
+# lord_of_geek
+
+Prototype qui propose une façon d'organiser son code pour débuter...
