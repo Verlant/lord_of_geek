@@ -13,12 +13,13 @@ class M_Exemplaire
      * catégorie passée en argument
      *
      * @param $idCategorie
-     * @return un tableau associatif
+     * @return Array un tableau associatif
      */
     public static function trouveLesJeuxDeCategorie($idCategorie)
     {
         $req = "SELECT 
-                    exemplaire.id AS id, 
+                    exemplaire.id AS id,
+                    categorie_id,
                     prixAchat, 
                     prixVente,
                     anneeAchat, 
@@ -48,7 +49,7 @@ class M_Exemplaire
      * Retourne les jeux concernés par le tableau des idProduits passée en argument
      *
      * @param $desIdJeux tableau d'idProduits
-     * @return un tableau associatif
+     * @return Array un tableau associatif
      */
     public static function trouveLesJeuxDuTableau($desIdJeux)
     {
@@ -57,7 +58,7 @@ class M_Exemplaire
         if ($nbProduits != 0) {
             foreach ($desIdJeux as $unIdProduit) {
                 $req = "SELECT 
-                            exemplaire.id AS id, 
+                            exemplaire.id AS id,
                             prixAchat, 
                             prixVente, 
                             anneeAchat, 
@@ -90,13 +91,14 @@ class M_Exemplaire
     /**
      * Retourne les derniers jeux acquis ou modifié le mois dernier
      *
-     * @return un tableau associatif
+     * @return Array un tableau associatif
      */
     public static function trouveLesJeuxDepuis()
     {
         $dateVariable = date('Y-m-d H:i:s');
         $req = "SELECT 
-                    exemplaire.id AS id, 
+                    exemplaire.id AS id,
+                    categorie_id,
                     prixAchat, 
                     prixVente,
                     anneeAchat, 
@@ -117,6 +119,39 @@ class M_Exemplaire
                     etat ON etat_id = etat.id 
                 WHERE
                     dateCreation < '$dateVariable' OR dateModification < '$dateVariable'";
+        $res = AccesDonnees::query($req);
+        $lesLignes = $res->fetchAll();
+        return $lesLignes;
+    }
+
+    /**
+     * Retourne les derniers jeux acquis ou modifié le mois dernier
+     *
+     * @return Array un tableau associatif
+     */
+    public static function trouveLesJeux()
+    {
+        $req = "SELECT 
+                    exemplaire.id AS id,
+                    categorie_id,
+                    prixAchat, 
+                    prixVente,
+                    anneeAchat, 
+                    dateCreation, 
+                    dateModification, 
+                    nomJeux, 
+                    imageJeux, 
+                    anneeSortie, 
+                    nomConsole, 
+                    descriptionEtat
+                FROM
+                    exemplaire
+                JOIN
+                    jeux ON jeux_id = jeux.id
+                JOIN
+                    console ON console_id = console.id
+                JOIN
+                    etat ON etat_id = etat.id";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetchAll();
         return $lesLignes;

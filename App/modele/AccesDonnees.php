@@ -18,10 +18,10 @@
 class AccesDonnees
 {
 
-    private static $serveur = 'mysql:host=localhost';
-    private static $bdd = 'dbname=lord_of_geek';
-    private static $user = 'root';
-    private static $mdp = '';
+    private static String $serveur = 'mysql:host=localhost';
+    private static String $bdd = 'dbname=lord_of_geek';
+    private static String $user = 'root';
+    private static String $mdp = '';
 
     /**
      *

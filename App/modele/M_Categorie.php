@@ -11,7 +11,7 @@ class M_Categorie
     /**
      * Retourne toutes les catégories sous forme d'un tableau associatif
      *
-     * @return le tableau associatif des catégories
+     * @return Array le tableau associatif des catégories
      */
     public static function trouveLesCategories()
     {

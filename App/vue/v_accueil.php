@@ -1,3 +1,8 @@
+<?php
+// $controleur = new C_Consultation();
+// $controleur->setLesCategories();
+// $lesJeux = $controleur->consultation_action($action);
+?>
 <section>
     <h1>
         Lord Of Geek
@@ -13,7 +18,8 @@
             $description = $unJeu['nomJeux'];
             $prix = $unJeu['prixVente'];
             $image = $unJeu['imageJeux'];
-            $etat = $unJeu['descriptionEtat']
+            $etat = $unJeu['descriptionEtat'];
+            $categorie = $unJeu['categorie_id']
         ?>
             <article>
                 <?php if (empty($image)) : ?>
@@ -24,7 +30,7 @@
                 <p><?= $description; ?></p>
                 <p>&Eacute;tat : <?= $etat; ?></p>
                 <p><?= "Prix : " . $prix . " Euros"; ?>
-                    <a href="index.php?uc=visite&categorie=<?= $categorie; ?>&jeu=<?= $id; ?>&action=ajouterAuPanier">
+                    <a href="index.php?uc=accueil&jeu=<?= $id; ?>&action=ajouterAuPanier">
                         <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                     </a>
                 </p>

@@ -17,17 +17,30 @@ $uc = filter_input(INPUT_GET, 'uc'); // Use Case
 $action = filter_input(INPUT_GET, 'action'); // Action
 initPanier();
 
-if (!$uc) {
+
+
+
+if (!isset($uc) or empty($uc)) {
     $uc = 'accueil';
+    $action = 'voirDerniersJeuxSortis';
+}
+if (!isset($action) or empty($action)) {
+    $action = 'voirDerniersJeuxSortis';
 }
 
 // Controleur principale
 switch ($uc) {
     case 'accueil':
-        include 'App/controleur/c_consultation.php';
+        include 'App/controleur/C_Consultation.php';
+        $controleur = new C_Consultation();
+        $lesJeux = $controleur->consultation_action($action, $uc);
         break;
     case 'visite':
-        include 'App/controleur/c_consultation.php';
+        include 'App/controleur/C_Consultation.php';
+        $controleur = new C_Consultation();
+        $controleur->setLesCategories(M_Categorie::trouveLesCategories());
+        $lesCategories = $controleur->getLesCategories();
+        $lesJeux = $controleur->consultation_action($action, $uc);
         break;
     case 'panier':
         include 'App/controleur/c_gestionPanier.php';

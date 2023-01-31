@@ -42,7 +42,7 @@ class M_Commande
      * @param $ville : chaîne
      * @param $cp : chaîne
      * @param $mail : chaîne
-     * @return : array
+     * @return Array : array
      */
     public static function estValide($nom, $rue, $ville, $cp, $mail)
     {
