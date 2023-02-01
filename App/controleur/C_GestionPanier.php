@@ -32,7 +32,7 @@ class C_GestionPanier
      * @param String $action
      * @return Array $lesJeuxDuPanier
      */
-    public function gestionPanier(String $action)
+    public function actionGestionPanier(String $action)
     {
         $lesJeuxDuPanier = [];
         switch ($action) {

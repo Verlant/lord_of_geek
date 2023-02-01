@@ -17,7 +17,8 @@ class M_Categorie
     {
         $req = "SELECT DISTINCT categorie.id, nomCategorie FROM lord_of_geek.categorie JOIN jeux ON categorie.id = categorie_id";
         $res = AccesDonnees::prepare($req);
-        $res->execute();
+        // $res->execute();
+        AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }

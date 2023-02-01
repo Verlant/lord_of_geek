@@ -33,19 +33,19 @@ switch ($uc) {
     case 'accueil':
         require('App/controleur/C_Consultation.php');
         $controleur = new C_Consultation();
-        $lesJeux = $controleur->consultation($action, $uc);
+        $lesJeux = $controleur->actionConsultation($action, $uc);
         break;
     case 'visite':
         require('App/controleur/C_Consultation.php');
         $controleur = new C_Consultation();
         $controleur->setLesCategories(M_Categorie::trouveLesCategories());
         $lesCategories = $controleur->getLesCategories();
-        $lesJeux = $controleur->consultation($action, $uc);
+        $lesJeux = $controleur->actionConsultation($action, $uc);
         break;
     case 'panier':
         require('App/controleur/C_GestionPanier.php');
         $controleur = new C_GestionPanier();
-        $lesJeuxDuPanier = $controleur->gestionPanier($action);
+        $lesJeuxDuPanier = $controleur->actionGestionPanier($action);
         $uc = count($lesJeuxDuPanier) > 0 ? $uc : "";
         break;
     case 'commander':

@@ -17,7 +17,7 @@ class C_Consultation
      * @param String $action
      * @return Array $lesJeux
      */
-    public function consultation(String $action, String $uc)
+    public function actionConsultation(String $action, String $uc)
     {
         /**
          * Controleur pour la consultation des exemplaires

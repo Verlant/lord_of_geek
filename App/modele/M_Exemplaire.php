@@ -41,7 +41,8 @@ class M_Exemplaire
                 WHERE
                     categorie_id = '$idCategorie'";
         $res = AccesDonnees::prepare($req);
-        $res->execute();
+        // $res->execute();
+        AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -81,14 +82,14 @@ class M_Exemplaire
                         WHERE
                             exemplaire.id = '$unIdProduit'";
                 $res = AccesDonnees::prepare($req);
-                $res->execute();
+                // $res->execute();
+                AccesDonnees::execute($res);
                 $unProduit = $res->fetch();
                 $lesProduits[] = $unProduit;
             }
         }
         return $lesProduits;
     }
-
 
     /**
      * Retourne les derniers jeux acquis ou modifié le mois dernier
@@ -126,7 +127,8 @@ class M_Exemplaire
                     dateCreation > '$dateMoisAvant' OR dateModification > '$dateMoisAvant' AND
                 dateCreation < '$dateCeMois' OR dateModification < '$dateCeMois'";
         $res = AccesDonnees::prepare($req);
-        $res->execute();
+        // $res->execute();
+        AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -159,15 +161,9 @@ class M_Exemplaire
                     console ON console_id = console.id
                 JOIN
                     etat ON etat_id = etat.id";
-
-        // $sql = "SELECT * FROM `console` WHERE id_console = :id_console";
-        // $statement = $pdo->prepare($sql);
-        // $statement->bindParam(':id_console', $id, PDO::PARAM_INT);
-        // $statement->execute();
-        // $result = $statement->fetch(PDO::FETCH_ASSOC);
-
         $res = AccesDonnees::prepare($req);
-        $res->execute();
+        // $res->execute();
+        AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }

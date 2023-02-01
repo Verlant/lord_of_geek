@@ -64,4 +64,38 @@ class AccesDonnees
     {
         return AccesDonnees::getPdo()->exec($requete_sql);
     }
+
+    /**
+     * Execute une requete préparé
+     */
+    public static function execute(PDOStatement $statement)
+    {
+        $statement->execute();
+    }
+
+    /**
+     * Récupère l'id du dernier insert
+     */
+    public static function lastInsertId()
+    {
+        return AccesDonnees::getPdo()->lastInsertId();
+    }
+
+    /**
+     * Lance une transaction PDO
+     * @return void
+     */
+    public static function beginTransaction()
+    {
+        AccesDonnees::getPdo()->beginTransaction();
+    }
+
+    /**
+     * Execute un commit
+     * @return void
+     */
+    public static function commit()
+    {
+        AccesDonnees::getPdo()->commit();
+    }
 }
