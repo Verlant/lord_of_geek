@@ -1,13 +1,13 @@
 <?php
 
-include 'App/modele/M_commande.php';
+include 'App/modele/M_Commande.php';
 
 /**
  * Controleur pour les commandes
  * @author Loic LOG
  */
 switch ($action) {
-    case 'passerCommande' :
+    case 'passerCommande':
         $n = nbJeuxDuPanier();
         if ($n > 0) {
             $nom = '';
@@ -20,7 +20,7 @@ switch ($action) {
             $uc = '';
         }
         break;
-    case 'confirmerCommande' :
+    case 'confirmerCommande':
         $nom = filter_input(INPUT_POST, 'nom');
         $rue = filter_input(INPUT_POST, 'rue');
         $ville = filter_input(INPUT_POST, 'ville');
@@ -39,6 +39,3 @@ switch ($action) {
         }
         break;
 }
-
-
-

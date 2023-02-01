@@ -23,6 +23,8 @@ class AccesDonnees
     private static String $user = 'root';
     private static String $mdp = '';
 
+    // '*76CD18F0C4007A49A5C5B225B97D86157835A5F7'
+
     /**
      *
      * @var PDO
@@ -48,9 +50,9 @@ class AccesDonnees
      * @param string $requete_sql
      * @return PDOStatement
      */
-    public static function query(string $requete_sql)
+    public static function prepare(string $requete_sql)
     {
-        return AccesDonnees::getPdo()->query($requete_sql);
+        return AccesDonnees::getPdo()->prepare($requete_sql);
     }
 
     /**

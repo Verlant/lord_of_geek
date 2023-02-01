@@ -40,7 +40,8 @@ class M_Exemplaire
                     etat ON etat_id = etat.id 
                 WHERE
                     categorie_id = '$idCategorie'";
-        $res = AccesDonnees::query($req);
+        $res = AccesDonnees::prepare($req);
+        $res->execute();
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -79,7 +80,8 @@ class M_Exemplaire
                             etat ON etat_id = etat.id 
                         WHERE
                             exemplaire.id = '$unIdProduit'";
-                $res = AccesDonnees::query($req);
+                $res = AccesDonnees::prepare($req);
+                $res->execute();
                 $unProduit = $res->fetch();
                 $lesProduits[] = $unProduit;
             }
@@ -95,7 +97,10 @@ class M_Exemplaire
      */
     public static function trouveLesJeuxDepuis()
     {
-        $dateVariable = date('Y-m-d H:i:s');
+        $dateCeMois = date('Y-m-d H:i:s');
+        $today = new DateTime();
+        $today->sub(new DateInterval("P1M"));
+        $dateMoisAvant = $today->format("Y-m-d H:i:s");
         $req = "SELECT 
                     exemplaire.id AS id,
                     categorie_id,
@@ -118,8 +123,10 @@ class M_Exemplaire
                 JOIN
                     etat ON etat_id = etat.id 
                 WHERE
-                    dateCreation < '$dateVariable' OR dateModification < '$dateVariable'";
-        $res = AccesDonnees::query($req);
+                    dateCreation > '$dateMoisAvant' OR dateModification > '$dateMoisAvant' AND
+                dateCreation < '$dateCeMois' OR dateModification < '$dateCeMois'";
+        $res = AccesDonnees::prepare($req);
+        $res->execute();
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -152,7 +159,15 @@ class M_Exemplaire
                     console ON console_id = console.id
                 JOIN
                     etat ON etat_id = etat.id";
-        $res = AccesDonnees::query($req);
+
+        // $sql = "SELECT * FROM `console` WHERE id_console = :id_console";
+        // $statement = $pdo->prepare($sql);
+        // $statement->bindParam(':id_console', $id, PDO::PARAM_INT);
+        // $statement->execute();
+        // $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $res = AccesDonnees::prepare($req);
+        $res->execute();
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }

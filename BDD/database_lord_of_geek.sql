@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`categorie` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nomCategorie_UNIQUE` (`nomCategorie` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
@@ -39,6 +38,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`ville` (
   `nomVille` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -55,6 +56,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`code_postal` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -75,6 +78,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`adresse_livraison` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -97,6 +102,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`client` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -104,7 +111,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lord_of_geek`.`commande` (
   `id` INT UNSIGNED NOT NULL,
-  `prixVente` DECIMAL(10,2) NOT NULL,
   `dateCreation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateModification` TIMESTAMP NULL DEFAULT NULL,
   `client_id` INT NOT NULL,
@@ -129,6 +135,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`console` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nomConsole_UNIQUE` (`nomConsole` ASC))
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -137,7 +145,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lord_of_geek`.`jeux` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nomJeux` VARCHAR(150) NOT NULL,
-  `image` VARCHAR(32) NULL,
+  `imageJeux` VARCHAR(32) NULL,
   `anneeSortie` YEAR NOT NULL,
   `categorie_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
@@ -149,6 +157,8 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`jeux` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -156,18 +166,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lord_of_geek`.`etat` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) NOT NULL,
+  `descriptionEtat` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `description_UNIQUE` (`description` ASC))
 ENGINE = InnoDB;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
 -- Table `lord_of_geek`.`exemplaire`
 -- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `lord_of_geek`.`exemplaire` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `prixAchat` DECIMAL(10,2) NULL COMMENT 'Prix de vente',
+  `prixAchat` DECIMAL(10,2) NULL,
+  `prixVente` DECIMAL(10,2) NOT NULL,
   `anneeAchat` YEAR NULL,
   `dateCreation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateModification` TIMESTAMP NULL,
@@ -194,7 +208,6 @@ CREATE TABLE IF NOT EXISTS `lord_of_geek`.`exemplaire` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
@@ -223,22 +236,21 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
-ALTER TABLE `lord_of_geek`.`commande` 
-DROP COLUMN `prixVente`;
-
-ALTER TABLE `lord_of_geek`.`exemplaire` 
-ADD COLUMN `prixVente` DECIMAL(10,2) NOT NULL AFTER `prixAchat`,
-CHANGE COLUMN `jeux_id` `jeux_id` INT(11) NOT NULL AFTER `dateModification`;
-
-ALTER TABLE `lord_of_geek`.`etat` 
-CHANGE COLUMN `description_etat` `descriptionEtat` VARCHAR(45) NOT NULL ;
-
-ALTER TABLE `lord_of_geek`.`jeux` 
-CHANGE COLUMN `image` `imageJeux` VARCHAR(32) NULL DEFAULT NULL ;
-
--- ALTER TABLE `exemplaire` AUTO_INCREMENT = 1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- MODIF TABLE
+
+-- ALTER TABLE `lord_of_geek`.`commande` 
+-- DROP COLUMN `prixVente`;
+
+-- ALTER TABLE `lord_of_geek`.`exemplaire` 
+-- ADD COLUMN `prixVente` DECIMAL(10,2) NOT NULL AFTER `prixAchat`,
+-- CHANGE COLUMN `jeux_id` `jeux_id` INT(11) NOT NULL AFTER `dateModification`;
+
+-- ALTER TABLE `lord_of_geek`.`jeux` 
+-- CHANGE COLUMN `image` `imageJeux` VARCHAR(32) NULL DEFAULT NULL ;

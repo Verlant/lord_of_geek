@@ -31,12 +31,12 @@
                 <p><?= $description; ?></p>
                 <p>&Eacute;tat : <?= $etat; ?></p>
                 <p><?= "Prix : " . $prix . " Euros"; ?>
-                    <?php if ($action == 'voirCategories') : ?>
-                        <a href="index.php?uc=visite&jeu=<?= $id; ?>&action=ajouterAuPanier">
+                    <?php if (isset($_GET['categorie']) and !empty($_GET['categorie'])) : ?>
+                        <a href="index.php?uc=visite&categorie=<?= $categorie; ?>&jeu=<?= $id; ?>&action=ajouterAuPanier">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
                     <?php else : ?>
-                        <a href="index.php?uc=visite&categorie=<?= $categorie; ?>&jeu=<?= $id; ?>&action=ajouterAuPanier">
+                        <a href="index.php?uc=visite&jeu=<?= $id; ?>&action=ajouterAuPanier">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
                     <?php endif; ?>

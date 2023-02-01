@@ -23,10 +23,10 @@ INSERT INTO `lord_of_geek`.`etat` (`description`) VALUES ('Mauvais');
 INSERT INTO `lord_of_geek`.`etat` (`description`) VALUES ('Très mauvais');
 
 -- Exemplaire
-INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`) VALUES ('1', '1', '1');
-INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`) VALUES ('2', '2', '2');
-INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`) VALUES ('3', '3', '3');
+INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`, `prixVente`) VALUES ('1', '1', '1', '30.00');
+INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`, `prixVente`) VALUES ('2', '2', '2', '10.00');
+INSERT INTO `lord_of_geek`.`exemplaire` (`console_id`, `jeux_id`, `etat_id`, `prixVente`) VALUES ('3', '3', '3', '5.00');
 
-UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '30.00' WHERE (`id` = '5');
-UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '10.00' WHERE (`id` = '6');
-UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '5.00' WHERE (`id` = '7');
+-- UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '30.00' WHERE (`id` = '5');
+-- UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '10.00' WHERE (`id` = '6');
+-- UPDATE `lord_of_geek`.`exemplaire` SET `prixVente` = '5.00' WHERE (`id` = '7');

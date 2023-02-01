@@ -6,7 +6,8 @@
  * Crée une variable de type session dans le cas
  * où elle n'existe pas 
  */
-function initPanier() {
+function initPanier()
+{
     if (!isset($_SESSION['jeux'])) {
         $_SESSION['jeux'] = array();
     }
@@ -17,7 +18,8 @@ function initPanier() {
  *
  * Supprime la variable de type session 
  */
-function supprimerPanier() {
+function supprimerPanier()
+{
     unset($_SESSION['jeux']);
 }
 
@@ -30,7 +32,8 @@ function supprimerPanier() {
  * @param $idJeu : identifiant de jeu
  * @return vrai si le jeu n'était pas dans la variable, faux sinon 
  */
-function ajouterAuPanier($idJeu) {
+function ajouterAuPanier($idJeu)
+{
     $ok = false;
     if (!in_array($idJeu, $_SESSION['jeux'])) {
         $_SESSION['jeux'][] = $idJeu;
@@ -45,7 +48,8 @@ function ajouterAuPanier($idJeu) {
  * Retourne le tableau des identifiants de jeu
  * @return : le tableau
  */
-function getLesIdJeuxDuPanier() {
+function getLesIdJeuxDuPanier()
+{
     return $_SESSION['jeux'];
 }
 
@@ -56,7 +60,8 @@ function getLesIdJeuxDuPanier() {
  * et retourne le nombre d'éléments de la variable session
  * @return : le nombre 
  */
-function nbJeuxDuPanier() {
+function nbJeuxDuPanier()
+{
     $n = 0;
     if (isset($_SESSION['jeux'])) {
         $n = count($_SESSION['jeux']);
@@ -72,7 +77,8 @@ function nbJeuxDuPanier() {
  * @param $idProduit : identifiant de jeu
 
  */
-function retirerDuPanier($idProduit) {
+function retirerDuPanier($idProduit)
+{
     $index = array_search($idProduit, $_SESSION['jeux']);
     unset($_SESSION['jeux'][$index]);
 }
@@ -81,12 +87,13 @@ function retirerDuPanier($idProduit) {
  * Affiche une liste d'erreur
  * @param array $msgErreurs
  */
-function afficheErreurs(array $msgErreurs) {
+function afficheErreurs(array $msgErreurs)
+{
     echo '﻿<div class="erreur"><ul>';
     foreach ($msgErreurs as $erreur) {
-        ?>     
+?>
         <li><?php echo $erreur ?></li>
-        <?php
+<?php
     }
     echo '</ul></div>';
 }
@@ -95,6 +102,7 @@ function afficheErreurs(array $msgErreurs) {
  * Affiche un message bleu
  * @param string $msg
  */
-function afficheMessage(string $msg) {
-    echo '﻿<div class="message">'.$msg.'</div>';
+function afficheMessage(string $msg)
+{
+    echo '﻿<div class="message">' . $msg . '</div>';
 }
