@@ -15,7 +15,6 @@ function initPanier()
 
 /**
  * Supprime le panier
- *
  * Supprime la variable de type session 
  */
 function supprimerPanier()
@@ -32,7 +31,7 @@ function supprimerPanier()
  * @param $idJeu : identifiant de jeu
  * @return vrai si le jeu n'était pas dans la variable, faux sinon 
  */
-function ajouterAuPanier($idJeu)
+function ajouterJeuSession($idJeu)
 {
     $ok = false;
     if (!in_array($idJeu, $_SESSION['jeux'])) {
@@ -105,4 +104,37 @@ function afficheErreurs(array $msgErreurs)
 function afficheMessage(string $msg)
 {
     echo '﻿<div class="message">' . $msg . '</div>';
+}
+
+/**
+ * Fonction qui gère les différentes action sur la page visite
+ * @param String $action
+ * @return Array $lesJeux
+ */
+function action_visite(C_Consultation $controleur, String $action, int $idJeu, int $categorie)
+{
+    if ($action == 'voirJeux') {
+        $lesJeux = $controleur->voirJeux($categorie);
+    } elseif ($action == 'ajouterAuPanier') {
+        $lesJeux = $controleur->ajouterAuPanier($idJeu, $categorie);
+    } else {
+        $lesJeux = $controleur->tousLesJeux();
+    }
+    return $lesJeux;
+}
+
+/**
+ * Fonction qui gère les différentes action sur la page visite
+ * @param String $action
+ * @return Array $lesJeux
+ */
+function action_panier(C_GestionPanier $controleur, String $action, int $idJeu)
+{
+    $lesJeuxDuPanier = [];
+    if ($action == 'supprimerUnJeu') {
+        $controleur->supprimerUnJeu($idJeu);
+    }
+    $desIdJeu = getLesIdJeuxDuPanier();
+    $lesJeuxDuPanier = $controleur->voirPanier($desIdJeu);
+    return $lesJeuxDuPanier;
 }

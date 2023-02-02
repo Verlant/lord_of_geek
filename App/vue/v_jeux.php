@@ -20,7 +20,6 @@
             $prix = $unJeu['prixVente'];
             $image = $unJeu['imageJeux'];
             $etat = $unJeu['descriptionEtat'];
-            $categorie = $unJeu['categorie_id']
         ?>
             <article>
                 <?php if (empty($image)) : ?>
@@ -31,7 +30,7 @@
                 <p><?= $description; ?></p>
                 <p>&Eacute;tat : <?= $etat; ?></p>
                 <p><?= "Prix : " . $prix . " Euros"; ?>
-                    <?php if (isset($_GET['categorie']) and !empty($_GET['categorie'])) : ?>
+                    <?php if ($categorie > 0) : ?>
                         <a href="index.php?uc=visite&categorie=<?= $categorie; ?>&jeu=<?= $id; ?>&action=ajouterAuPanier">
                             <img src="public/images/mettrepanier.png" title="Ajouter au panier" class="add" />
                         </a>
