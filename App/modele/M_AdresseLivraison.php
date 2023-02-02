@@ -2,7 +2,7 @@
 
 class M_AdresseLivraison
 {
-    // A modifier si on veut qu'un client puisse avoir plusieures adresses associées
+    // A modifier si une ville/code_postal est deja inscrite dans la bdd
     /**
      * @param String $adresse
      * @param String $nom
@@ -13,32 +13,38 @@ class M_AdresseLivraison
     public function creerAdresseLivraison(String $adresse, String $nom, String $ville, String $cp)
     {
         // Démarre une transaction
-        AccesDonnees::beginTransaction();
+        M_AccesDonnees::beginTransaction();
 
         // Requete d'ecriture d'une ville
         $reqVille = "INSERT INTO ville(nomVille) VALUES (:ville)";
-        $resVille = AccesDonnees::prepare($reqVille);
-        $resVille->bindParam(':ville', $ville);
-        AccesDonnees::execute($resVille);
+        $resVille = M_AccesDonnees::prepare($reqVille);
+        // $resVille->bindParam(':ville', $ville);
+        M_AccesDonnees::bindParam($resVille, ':ville', $ville, PDO::PARAM_STR);
+        M_AccesDonnees::execute($resVille);
 
         // Requete d'ecriture d'un code postal
-        $ville_id = AccesDonnees::lastInsertId();
+        $ville_id = M_AccesDonnees::lastInsertId();
         $reqCodePostal = "INSERT INTO code_postal VALUES (:cp, :ville_id)";
-        $resCodePostal = AccesDonnees::prepare($reqCodePostal);
-        $resCodePostal->bindParam(':cp', $cp);
-        $resCodePostal->bindParam(':ville_id', $ville_id);
-        AccesDonnees::execute($resVille);
+        $resCodePostal = M_AccesDonnees::prepare($reqCodePostal);
+        // $resCodePostal->bindParam(':cp', $cp);
+        // $resCodePostal->bindParam(':ville_id', $ville_id);
+        M_AccesDonnees::bindParam($resCodePostal, ':cp', $cp, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($resCodePostal, ':ville_id', $ville_id, PDO::PARAM_INT);
+        M_AccesDonnees::execute($resCodePostal);
 
         // Requete d'ecriture d'une adresse
-        $cp_id = AccesDonnees::lastInsertId();
+        $cp_id = M_AccesDonnees::lastInsertId();
         $reqAdresse = "INSERT INTO adresse_livraison(adresseRueLivraison, nomPrenomLivraison, code_postal_id) VALUES (:adresse, :nom, :cp_id)";
-        $resAdresse = AccesDonnees::prepare($reqAdresse);
-        $resAdresse->bindParam(':adresse', $adresse);
-        $resAdresse->bindParam(':nom', $nom);
-        $resAdresse->bindParam(':cp_id', $cp_id);
-        AccesDonnees::execute($resVille);
+        $resAdresse = M_AccesDonnees::prepare($reqAdresse);
+        // $resAdresse->bindParam(':adresse', $adresse);
+        // $resAdresse->bindParam(':nom', $nom);
+        // $resAdresse->bindParam(':cp_id', $cp_id);
+        M_AccesDonnees::bindParam($resAdresse, ':adresse', $adresse, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($resAdresse, ':nom', $nom, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($resAdresse, ':cp_id', $cp_id, PDO::PARAM_INT);
+        M_AccesDonnees::execute($resAdresse);
 
         // Commit la transaction
-        AccesDonnees::commit();
+        M_AccesDonnees::commit();
     }
 }

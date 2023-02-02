@@ -40,9 +40,9 @@ class M_Exemplaire
                     etat ON etat_id = etat.id 
                 WHERE
                     categorie_id = '$idCategorie'";
-        $res = AccesDonnees::prepare($req);
+        $res = M_AccesDonnees::prepare($req);
         // $res->execute();
-        AccesDonnees::execute($res);
+        M_AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -81,9 +81,9 @@ class M_Exemplaire
                             etat ON etat_id = etat.id 
                         WHERE
                             exemplaire.id = '$unIdProduit'";
-                $res = AccesDonnees::prepare($req);
+                $res = M_AccesDonnees::prepare($req);
                 // $res->execute();
-                AccesDonnees::execute($res);
+                M_AccesDonnees::execute($res);
                 $unProduit = $res->fetch();
                 $lesProduits[] = $unProduit;
             }
@@ -126,9 +126,9 @@ class M_Exemplaire
                 WHERE
                     dateCreation > '$dateMoisAvant' OR dateModification > '$dateMoisAvant' AND
                 dateCreation < '$dateCeMois' OR dateModification < '$dateCeMois'";
-        $res = AccesDonnees::prepare($req);
+        $res = M_AccesDonnees::prepare($req);
         // $res->execute();
-        AccesDonnees::execute($res);
+        M_AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }
@@ -161,9 +161,9 @@ class M_Exemplaire
                     console ON console_id = console.id
                 JOIN
                     etat ON etat_id = etat.id";
-        $res = AccesDonnees::prepare($req);
+        $res = M_AccesDonnees::prepare($req);
         // $res->execute();
-        AccesDonnees::execute($res);
+        M_AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }

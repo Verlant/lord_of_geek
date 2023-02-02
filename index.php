@@ -6,11 +6,13 @@ session_start();
 // Pour afficher les erreurs PHP
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+
 // Attention : A supprimer en production !!!
 
-require('util/fonctions.inc.php');
-require('util/validateurs.inc.php');
-require('App/modele/AccesDonnees.php');
+require 'util/autoLoad.php';
+require 'util/fonctions.inc.php';
+require 'util/validateurs.inc.php';
+autoLoad();
 
 
 $uc = filter_input(INPUT_GET, 'uc'); // Use Case
@@ -19,31 +21,34 @@ initPanier();
 
 
 
-
 if (!isset($uc) or empty($uc)) {
     $uc = 'accueil';
-    $action = 'voirDerniersJeuxSortis';
+    // $action = 'voirDerniersJeuxSortis';
 }
-if (!isset($action) or empty($action)) {
-    $action = 'voirDerniersJeuxSortis';
-}
+// if (!isset($action) or empty($action)) {
+//     $action = 'voirDerniersJeuxSortis';
+// }
 
 // Controleur principale
 switch ($uc) {
     case 'accueil':
-        require('App/controleur/C_Consultation.php');
         $controleur = new C_Consultation();
-        $lesJeux = $controleur->actionConsultation($action, $uc);
+        $lesJeux = $controleur->derniersJeuxSortis();
         break;
     case 'visite':
-        require('App/controleur/C_Consultation.php');
         $controleur = new C_Consultation();
-        $controleur->setLesCategories(M_Categorie::trouveLesCategories());
-        $lesCategories = $controleur->getLesCategories();
-        $lesJeux = $controleur->actionConsultation($action, $uc);
+        if ($action == 'voirJeux') {
+            $categorie = filter_input(INPUT_GET, 'categorie');
+            $controleur->voirJeux($categorie);
+        } elseif ($action == 'ajouterAuPanier') {
+            $idJeu = filter_input(INPUT_GET, 'jeu');
+            $categorie = filter_input(INPUT_GET, 'categorie');
+            $lesJeux = $this->ajouterAuPanier($idJeu, $categorie);
+        } else {
+            $lesJeux = $this->tousLesJeux();
+        }
         break;
     case 'panier':
-        require('App/controleur/C_GestionPanier.php');
         $controleur = new C_GestionPanier();
         $lesJeuxDuPanier = $controleur->actionGestionPanier($action);
         $uc = count($lesJeuxDuPanier) > 0 ? $uc : "";
@@ -52,10 +57,11 @@ switch ($uc) {
         require('App/controleur/c_passerCommande.php');
         break;
     case 'administrer':
-        require('App/controleur/c_monCompte.php');
+        require('App/controleur/C_MonCompte.php');
         break;
     case 'compte':
-        include("App/controleur/c_monCompte.php");
+        $controleur = new C_MonCompte();
+        $controleur->action_monCompte();
         break;
     default:
         header('Location: index.php?uc=accueil&action=derniersJeuxSortis');

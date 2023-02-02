@@ -16,9 +16,9 @@ class M_Categorie
     public static function trouveLesCategories()
     {
         $req = "SELECT DISTINCT categorie.id, nomCategorie FROM lord_of_geek.categorie JOIN jeux ON categorie.id = categorie_id";
-        $res = AccesDonnees::prepare($req);
+        $res = M_AccesDonnees::prepare($req);
         // $res->execute();
-        AccesDonnees::execute($res);
+        M_AccesDonnees::execute($res);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
     }

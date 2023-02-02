@@ -25,11 +25,11 @@ class M_Commande
     public static function creerCommande($nom, $rue, $cp, $ville, $mail, $listJeux)
     {
         $req = "insert into commande(nomPrenomClient, adresseRueClient, cpClient, villeClient, mailClient) values ('$nom','$rue','$cp','$ville','$mail')";
-        $res = AccesDonnees::exec($req);
-        $idCommande = AccesDonnees::getPdo()->lastInsertId();
+        $res = M_AccesDonnees::exec($req);
+        $idCommande = M_AccesDonnees::getPdo()->lastInsertId();
         foreach ($listJeux as $jeu) {
             $req = "insert into lignes_commande(commande_id, exemplaire_id) values ('$idCommande','$jeu')";
-            $res = AccesDonnees::exec($req);
+            $res = M_AccesDonnees::exec($req);
         }
     }
 

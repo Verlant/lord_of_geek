@@ -15,15 +15,13 @@
  * @version    1.0
  * @link       http://www.php.net/manual/fr/book.pdo.php
  */
-class AccesDonnees
+class M_AccesDonnees
 {
 
     private static String $serveur = 'mysql:host=localhost';
     private static String $bdd = 'dbname=lord_of_geek';
     private static String $user = 'root';
     private static String $mdp = '';
-
-    // '*76CD18F0C4007A49A5C5B225B97D86157835A5F7'
 
     /**
      *
@@ -38,32 +36,41 @@ class AccesDonnees
      */
     public static function getPdo()
     {
-        if (AccesDonnees::$monPdo == null) {
-            AccesDonnees::$monPdo = new PDO(AccesDonnees::$serveur . ';' . AccesDonnees::$bdd, AccesDonnees::$user, AccesDonnees::$mdp);
-            AccesDonnees::$monPdo->query("SET CHARACTER SET utf8");
+        if (M_AccesDonnees::$monPdo == null) {
+            M_AccesDonnees::$monPdo = new PDO(M_AccesDonnees::$serveur . ';' . M_AccesDonnees::$bdd, M_AccesDonnees::$user, M_AccesDonnees::$mdp);
+            M_AccesDonnees::$monPdo->query("SET CHARACTER SET utf8");
         }
-        return AccesDonnees::$monPdo;
+        return M_AccesDonnees::$monPdo;
     }
 
     /**
-     * Exécution d'une requete de lecture
+     * Préparation d'une requete de lecture
      * @param string $requete_sql
      * @return PDOStatement
      */
-    public static function prepare(string $requete_sql)
+    public static function prepare(String $requete_sql)
     {
-        return AccesDonnees::getPdo()->prepare($requete_sql);
+        return M_AccesDonnees::getPdo()->prepare($requete_sql);
     }
 
     /**
-     * Execution d'une requete d'écriture
-     * @param string $requete_sql
-     * @return int
+     * @param PDOStatement $statement
+     * @param String $marque
+     * @param mixed $valeur
+     * @param int $pdo_param
+     * @return void
      */
-    public static function exec(string $requete_sql)
+    public static function bindParam(PDOStatement $statement, String $marque, mixed $valeur, int $pdo_param)
     {
-        return AccesDonnees::getPdo()->exec($requete_sql);
+        $statement->bindParam($marque, $valeur, $pdo_param);
     }
+
+    // public static function bindAllParam(PDOStatement $statement, array $params)
+    // {
+    //     foreach ($params as $key => $value) {
+    //         $statement->bindParam($key, $value);
+    //     }
+    // }
 
     /**
      * Execute une requete préparé
@@ -78,7 +85,7 @@ class AccesDonnees
      */
     public static function lastInsertId()
     {
-        return AccesDonnees::getPdo()->lastInsertId();
+        return M_AccesDonnees::getPdo()->lastInsertId();
     }
 
     /**
@@ -87,7 +94,7 @@ class AccesDonnees
      */
     public static function beginTransaction()
     {
-        AccesDonnees::getPdo()->beginTransaction();
+        M_AccesDonnees::getPdo()->beginTransaction();
     }
 
     /**
@@ -96,6 +103,6 @@ class AccesDonnees
      */
     public static function commit()
     {
-        AccesDonnees::getPdo()->commit();
+        M_AccesDonnees::getPdo()->commit();
     }
 }

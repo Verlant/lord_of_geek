@@ -1,5 +1,5 @@
 <?php
-require 'App/modele/M_CompteClient.php';
+// require 'App/modele/M_Client.php';
 class C_SessionClient
 {
     /**
@@ -7,12 +7,12 @@ class C_SessionClient
      */
     function utilisateur_existe($identifiant, $mot_de_passe)
     {
-        // $conn = M_Client->getPDO();
+        $conn = new PDO();
         $sql = 'SELECT 1 FROM utilisateurs ';
         $sql .= 'WHERE identifiant = :login AND mot_de_passe = :mdp';
 
         // prepare and bind
-        $stmt = ->prepare($sql);
+        $stmt = (M_Client->getPDO())->prepare($sql);
         $stmt->bindParam(":login", $identifiant);
         $stmt->bindParam(":mdp", $mot_de_passe);
 
