@@ -74,6 +74,7 @@ class M_AccesDonnees
 
     /**
      * Execute une requete préparé
+     * @return void
      */
     public static function execute(PDOStatement $statement)
     {
@@ -83,7 +84,7 @@ class M_AccesDonnees
     /**
      * Récupère l'id du dernier insert
      */
-    public static function lastInsertId()
+    public static function lastInsertId(): int | false
     {
         return M_AccesDonnees::getPdo()->lastInsertId();
     }

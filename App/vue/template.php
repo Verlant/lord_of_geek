@@ -49,7 +49,7 @@ Prototype de Lord Of Geek (LOG)
                 include "App/vue/v_commande.php";
                 break;
             case 'compte':
-                include "App/vue/v_compte.php";
+                include "App/vue/v_compteClient.php";
                 break;
             case 'connexion':
                 include "App/vue/v_connexion.php";

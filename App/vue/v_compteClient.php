@@ -10,6 +10,23 @@
         <li>E-mail : <?= $infosClient['mailClient'] ?></li>
     </ul>
     <h2>Adresses :</h2>
+    <?php $i = 1;
+    foreach ($adressesClient as $adresse) :
+        $nom = $adresse['nomPrenomLivraison'];
+        $rue = $adresse['adresseRueLivraison'];
+        $ville = $adresse['nomVille'];
+        $cp = $adresse['code_postal_id'];
+    ?>
+        <h4>Adresse n°<?= $i ?></h4>
+        <ul>
+            <li>Nom : <?= $nom ?></li>
+            <li>Rue : <?= $rue ?></li>
+            <li>Ville : <?= $ville ?></li>
+            <li>Code postal : <?= $cp ?></li>
+        </ul>
+    <?php $i++;
+    endforeach; ?>
+
     <h3>Ajoutez une adresse :</h3>
     <div>
         <fieldset>

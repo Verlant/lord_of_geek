@@ -10,42 +10,33 @@ class M_AdresseLivraison
      * @param String $cp
      * @return void
      */
-    public static function creerAdresseLivraison(String $adresse, String $nom, String $ville, String $cp, int $client_id)
+    public static function creerAdresseLivraison(String $adresse, String $nom, String $cp_id, int $client_id): void
     {
-        // Démarre une transaction
-        M_AccesDonnees::beginTransaction();
-
-        // Requete d'ecriture d'une ville
-        $reqVille = "INSERT INTO ville(nomVille) VALUES (:ville)";
-        $resVille = M_AccesDonnees::prepare($reqVille);
-        // $resVille->bindParam(':ville', $ville);
-        M_AccesDonnees::bindParam($resVille, ':ville', $ville, PDO::PARAM_STR);
-        M_AccesDonnees::execute($resVille);
-
-        // Requete d'ecriture d'un code postal
-        $ville_id = M_AccesDonnees::lastInsertId();
-        $reqCodePostal = "INSERT INTO code_postal VALUES (:cp, :ville_id)";
-        $resCodePostal = M_AccesDonnees::prepare($reqCodePostal);
-        // $resCodePostal->bindParam(':cp', $cp);
-        // $resCodePostal->bindParam(':ville_id', $ville_id);
-        M_AccesDonnees::bindParam($resCodePostal, ':cp', $cp, PDO::PARAM_STR);
-        M_AccesDonnees::bindParam($resCodePostal, ':ville_id', $ville_id, PDO::PARAM_INT);
-        M_AccesDonnees::execute($resCodePostal);
-
         // Requete d'ecriture d'une adresse
-        $cp_id = M_AccesDonnees::lastInsertId();
-        $reqAdresse = "INSERT INTO adresse_livraison(adresseRueLivraison, nomPrenomLivraison, code_postal_id, client_id) VALUES (:adresse, :nom, :cp_id, client_id)";
-        $resAdresse = M_AccesDonnees::prepare($reqAdresse);
-        // $resAdresse->bindParam(':adresse', $adresse);
-        // $resAdresse->bindParam(':nom', $nom);
-        // $resAdresse->bindParam(':cp_id', $cp_id);
-        M_AccesDonnees::bindParam($resAdresse, ':adresse', $adresse, PDO::PARAM_STR);
-        M_AccesDonnees::bindParam($resAdresse, ':nom', $nom, PDO::PARAM_STR);
-        M_AccesDonnees::bindParam($resAdresse, ':cp_id', $cp_id, PDO::PARAM_INT);
-        M_AccesDonnees::bindParam($resAdresse, ':client_id', $client_id, PDO::PARAM_INT);
-        M_AccesDonnees::execute($resAdresse);
+        $req = "INSERT INTO adresse_livraison(adresseRueLivraison, nomPrenomLivraison, code_postal_id, client_id) VALUES (:adresse, :nom, :cp_id, :client_id)";
+        $res = M_AccesDonnees::prepare($req);
+        // $res->bindParam(':adresse', $adresse);
+        // $res->bindParam(':nom', $nom);
+        // $res->bindParam(':cp_id', $cp_id);
+        M_AccesDonnees::bindParam($res, ':adresse', $adresse, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($res, ':nom', $nom, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($res, ':cp_id', $cp_id, PDO::PARAM_STR);
+        M_AccesDonnees::bindParam($res, ':client_id', $client_id, PDO::PARAM_INT);
+        M_AccesDonnees::execute($res);
+    }
 
-        // Commit la transaction
-        M_AccesDonnees::commit();
+    public static function trouveLesAdresses(int $client_id): array | false
+    {
+        $req = "SELECT DISTINCT adresseRueLivraison, nomPrenomLivraison, nomVille, code_postal_id
+                FROM adresse_livraison
+                    JOIN code_postal
+                        ON code_postal.id = code_postal_id
+                    JOIN ville
+                        ON ville.id = ville_id
+                WHERE client_id = :client_id";
+        $res = M_AccesDonnees::prepare($req);
+        M_AccesDonnees::bindParam($res, ':client_id', $client_id, PDO::PARAM_STR);
+        M_AccesDonnees::execute($res);
+        return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 }

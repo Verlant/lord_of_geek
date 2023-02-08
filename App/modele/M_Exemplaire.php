@@ -43,7 +43,7 @@ class M_Exemplaire
         $res = M_AccesDonnees::prepare($req);
         // $res->execute();
         M_AccesDonnees::execute($res);
-        $lesLignes = $res->fetchAll();
+        $lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
         return $lesLignes;
     }
 
@@ -84,7 +84,7 @@ class M_Exemplaire
                 $res = M_AccesDonnees::prepare($req);
                 // $res->execute();
                 M_AccesDonnees::execute($res);
-                $unProduit = $res->fetch();
+                $unProduit = $res->fetch(PDO::FETCH_ASSOC);
                 $lesProduits[] = $unProduit;
             }
         }
@@ -129,7 +129,7 @@ class M_Exemplaire
         $res = M_AccesDonnees::prepare($req);
         // $res->execute();
         M_AccesDonnees::execute($res);
-        $lesLignes = $res->fetchAll();
+        $lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
         return $lesLignes;
     }
 
@@ -164,7 +164,7 @@ class M_Exemplaire
         $res = M_AccesDonnees::prepare($req);
         // $res->execute();
         M_AccesDonnees::execute($res);
-        $lesLignes = $res->fetchAll();
+        $lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
         return $lesLignes;
     }
 }

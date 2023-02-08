@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 // Pour afficher les erreurs PHP
 error_reporting(E_ALL);
@@ -88,6 +88,7 @@ switch ($uc) {
             $controleur->creerAdresseLivraison($adresse,  $nom,  $ville,  $codePostal, $session);
         }
         $infosClient = $controleur->infosClient($session);
+        $adressesClient = $controleur->adressesClient($session);
         break;
     case 'connexion':
         $controleur = new C_Client();

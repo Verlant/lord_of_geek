@@ -19,7 +19,7 @@ class M_Categorie
         $res = M_AccesDonnees::prepare($req);
         // $res->execute();
         M_AccesDonnees::execute($res);
-        $lesLignes = $res->fetchAll();
+        $lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
         return $lesLignes;
     }
 }
