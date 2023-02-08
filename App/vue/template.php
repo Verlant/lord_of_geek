@@ -21,7 +21,12 @@ Prototype de Lord Of Geek (LOG)
                 <li><a href="index.php?uc=accueil&action=derniersJeuxSortis"> Accueil </a></li>
                 <li><a href="index.php?uc=visite&action=voirCategories"> Voir le catalogue de jeux </a></li>
                 <li><a href="index.php?uc=panier&action=voirPanier"> Voir son panier </a></li>
-                <li><a href="index.php?uc=compte"> Mon compte </a></li>
+                <?php if (isset($_SESSION['pseudo'])) : ?>
+                    <li><a href="index.php?uc=compte"> Mon compte </a></li>
+                    <li><a href="index.php?uc=compte&action=deconnexion">Déconnexion</a></li>
+                <?php else : ?>
+                    <li><a href="index.php?uc=connexion">Connexion / Inscription</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
 
@@ -35,16 +40,19 @@ Prototype de Lord Of Geek (LOG)
                 include 'App/vue/v_accueil.php';
                 break;
             case 'visite':
-                include("App/vue/v_jeux.php");
+                include "App/vue/v_jeux.php";
                 break;
             case 'panier':
-                include("App/vue/v_panier.php");
+                include "App/vue/v_panier.php";
                 break;
             case 'commander':
-                include("App/vue/v_commande.php");
+                include "App/vue/v_commande.php";
                 break;
             case 'compte':
-                include("App/vue/v_compte.php");
+                include "App/vue/v_compte.php";
+                break;
+            case 'connexion':
+                include "App/vue/v_connexion.php";
                 break;
             default:
                 break;

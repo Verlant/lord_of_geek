@@ -111,7 +111,7 @@ function afficheMessage(string $msg)
  * @param String $action
  * @return Array $lesJeux
  */
-function action_visite(C_Consultation $controleur, String $action, int $idJeu, int $categorie)
+function actionVisite(C_Consultation $controleur, String $action, int $idJeu, int $categorie)
 {
     if ($action == 'voirJeux') {
         $lesJeux = $controleur->voirJeux($categorie);
@@ -128,7 +128,7 @@ function action_visite(C_Consultation $controleur, String $action, int $idJeu, i
  * @param String $action
  * @return Array $lesJeux
  */
-function action_panier(C_GestionPanier $controleur, String $action, int $idJeu)
+function actionPanier(C_GestionPanier $controleur, String $action, int $idJeu)
 {
     $lesJeuxDuPanier = [];
     if ($action == 'supprimerUnJeu') {

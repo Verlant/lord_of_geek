@@ -10,7 +10,7 @@ class M_AdresseLivraison
      * @param String $cp
      * @return void
      */
-    public function creerAdresseLivraison(String $adresse, String $nom, String $ville, String $cp)
+    public static function creerAdresseLivraison(String $adresse, String $nom, String $ville, String $cp, int $client_id)
     {
         // Démarre une transaction
         M_AccesDonnees::beginTransaction();
@@ -34,7 +34,7 @@ class M_AdresseLivraison
 
         // Requete d'ecriture d'une adresse
         $cp_id = M_AccesDonnees::lastInsertId();
-        $reqAdresse = "INSERT INTO adresse_livraison(adresseRueLivraison, nomPrenomLivraison, code_postal_id) VALUES (:adresse, :nom, :cp_id)";
+        $reqAdresse = "INSERT INTO adresse_livraison(adresseRueLivraison, nomPrenomLivraison, code_postal_id, client_id) VALUES (:adresse, :nom, :cp_id, client_id)";
         $resAdresse = M_AccesDonnees::prepare($reqAdresse);
         // $resAdresse->bindParam(':adresse', $adresse);
         // $resAdresse->bindParam(':nom', $nom);
@@ -42,6 +42,7 @@ class M_AdresseLivraison
         M_AccesDonnees::bindParam($resAdresse, ':adresse', $adresse, PDO::PARAM_STR);
         M_AccesDonnees::bindParam($resAdresse, ':nom', $nom, PDO::PARAM_STR);
         M_AccesDonnees::bindParam($resAdresse, ':cp_id', $cp_id, PDO::PARAM_INT);
+        M_AccesDonnees::bindParam($resAdresse, ':client_id', $client_id, PDO::PARAM_INT);
         M_AccesDonnees::execute($resAdresse);
 
         // Commit la transaction

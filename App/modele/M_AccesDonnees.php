@@ -60,7 +60,7 @@ class M_AccesDonnees
      * @param int $pdo_param
      * @return void
      */
-    public static function bindParam(PDOStatement $statement, String $marque, mixed $valeur, int $pdo_param)
+    public static function bindParam(PDOStatement $statement, String $marque, $valeur, int $pdo_param)
     {
         $statement->bindParam($marque, $valeur, $pdo_param);
     }
