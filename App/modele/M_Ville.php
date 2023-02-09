@@ -3,7 +3,7 @@
 class M_Ville
 {
 
-    public static function creerVille(String $ville): int | false
+    public static function creerVille(String $ville): int
     {
         $req = "INSERT INTO ville(nomVille) VALUES (:ville)";
         $res = M_AccesDonnees::prepare($req);

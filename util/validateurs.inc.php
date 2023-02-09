@@ -11,7 +11,8 @@
  * @param $codePostal : la chaîne testée
  * @return : vrai ou faux
  */
-function estUnCp($codePostal) {
+function estUnCp($codePostal)
+{
     return strlen($codePostal) == 5 && estEntier($codePostal);
 }
 
@@ -22,7 +23,8 @@ function estUnCp($codePostal) {
  * @param $valeur : la chaîne testée
  * @return : vrai ou faux
  */
-function estEntier($valeur) {
+function estEntier($valeur)
+{
     return preg_match("/[^0-9]/", $valeur) == 0;
 }
 
@@ -33,8 +35,7 @@ function estEntier($valeur) {
  * @param $mail : la chaîne testée
  * @return : vrai ou faux
  */
-function estUnMail($mail) {
-    return preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $mail);
+function estUnMail($mail)
+{
+    return preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $mail) == 1;
 }
-
-

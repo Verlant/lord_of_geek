@@ -3,71 +3,15 @@
 class C_Session
 {
     /**
-     * Fonction qui vérifie que l'identification saisie est correcte.
+     * Fonction qui vérifie si le mdp est bon lors de la connexion
+     * Retourne l'id de l'utilisateur en cas de réussite
+     * Retourne false en cas d'échec
      */
-    // function utilisateur_existe($identifiant, $mot_de_passe)
-    // {
-    //     $conn = new PDO();
-    //     $sql = 'SELECT 1 FROM utilisateurs ';
-    //     $sql .= 'WHERE identifiant = :login AND mot_de_passe = :mdp';
-
-    //     // prepare and bind
-    //     $stmt = (M_Client->getPDO())->prepare($sql);
-    //     $stmt->bindParam(":login", $identifiant);
-    //     $stmt->bindParam(":mdp", $mot_de_passe);
-
-    //     // Exécution
-    //     $stmt->execute();
-
-    //     // L'identification est bonne si la requête a retourné
-    //     // une ligne (l'utilisateur existe et le mot de passe
-    //     // est bon).
-    //     // Si c'est le cas $existe contient 1, sinon elle est
-    //     // vide. Il suffit de la retourner en tant que booléen.
-    //     if ($stmt->rowCount() > 0) {
-    //         // ok, il existe
-    //         $existe = true;
-    //     } else {
-    //         $existe = false;
-    //     }
-    //     return (bool) $existe;
-    // }
-
-
-
-
-    //Si public n'est pas ecrit, la methode est publique de base
-
-    // public function register(String $pseudo, String $password): bool
-    // {
-    //     $conn = $this->connexion();
-    //     $password = password_hash($password, PASSWORD_BCRYPT);
-    //     $sql = "INSERT INTO utilisateurs (identifiant, mot_de_passe)
-    //                 VALUES (:pseudo, :password);";
-    //     $stmt = $conn->prepare($sql);
-
-    //     $stmt->bindParam(":pseudo", $pseudo);
-    //     $stmt->bindParam(":password", $password);
-
-    //     $stmt->execute();
-    //     return true;
-    // }
-
-
-
-    // public function verifConnexion(String $uc)
-    // {
-    //     if (!isset($_SESSION['pseudo'])) {
-    //         $uc = 'connexion';
-    //     }
-    //     return $uc;
-    // }
-
-    public function verifMotDePasse(String $mail, String $mdp)
+    public function verifMotDePasse(String $mail, String $mdp): int
     {
         $data = M_Client::getInfoClientPourSession($mail);
         $mdp_bdd = $data['motDePasse'];
-        if (password_verify($mdp, $mdp_bdd)) {
+        if (password_verify($mdp, $mdp_bdd) and estEntier($data['id'])) {
             $_SESSION['id'] = $data['id'];
             $_SESSION['pseudo'] = $data['pseudoClient'];
         } else {
@@ -76,12 +20,98 @@ class C_Session
         return $data['id'];
     }
 
-    public static function getIdClient()
+    /**
+     * Fonction qui renvoie l'id de l'utilisateur connecté via la session
+     * Retourne false en cas d'échec
+     */
+    public static function getIdClient(): int | false
     {
         if (isset($_SESSION['id']) and !empty($_SESSION['id'])) {
             return $_SESSION['id'];
         } else {
             return false;
         }
+    }
+
+    /**
+     * Initialise le panier
+     *
+     * Crée une variable de type session dans le cas
+     * où elle n'existe pas 
+     */
+    public function initPanier()
+    {
+        if (!isset($_SESSION['jeux'])) {
+            $_SESSION['jeux'] = array();
+        }
+    }
+
+    /**
+     * Supprime le panier
+     * Supprime la variable de type session 
+     */
+    public function supprimerPanier()
+    {
+        unset($_SESSION['jeux']);
+    }
+
+    /**
+     * Ajoute un jeu au panier
+     *
+     * Teste si l'identifiant du jeu est déjà dans la variable session 
+     * ajoute l'identifiant à la variable de type session dans le cas où
+     * où l'identifiant du jeu n'a pas été trouvé
+     * @param $idJeu : identifiant de jeu
+     * @return vrai si le jeu n'était pas dans la variable, faux sinon 
+     */
+    public function ajouterJeuSession($idJeu)
+    {
+        $ok = false;
+        if (!in_array($idJeu, $_SESSION['jeux'])) {
+            $_SESSION['jeux'][] = $idJeu;
+            $ok = true;
+        }
+        return $ok;
+    }
+
+    /**
+     * Retourne les jeux du panier
+     *
+     * Retourne le tableau des identifiants de jeu
+     * @return : le tableau
+     */
+    public function getLesIdJeuxDuPanier()
+    {
+        return $_SESSION['jeux'];
+    }
+
+    /**
+     * Retourne le nombre de jeux du panier
+     *
+     * Teste si la variable de session existe
+     * et retourne le nombre d'éléments de la variable session
+     * @return : le nombre 
+     */
+    public function nbJeuxDuPanier()
+    {
+        $n = 0;
+        if (isset($_SESSION['jeux'])) {
+            $n = count($_SESSION['jeux']);
+        }
+        return $n;
+    }
+
+    /**
+     * Retire un de jeux du panier
+     *
+     * Recherche l'index de l'idProduit dans la variable session
+     * et détruit la valeur à ce rang
+     * @param $idProduit : identifiant de jeu
+
+     */
+    public function retirerDuPanier($idProduit)
+    {
+        $index = array_search($idProduit, $_SESSION['jeux']);
+        unset($_SESSION['jeux'][$index]);
     }
 }

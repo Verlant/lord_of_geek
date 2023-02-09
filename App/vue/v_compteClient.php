@@ -15,7 +15,7 @@
         $nom = $adresse['nomPrenomLivraison'];
         $rue = $adresse['adresseRueLivraison'];
         $ville = $adresse['nomVille'];
-        $cp = $adresse['code_postal_id'];
+        $cp = $adresse['codePostal'];
     ?>
         <h4>Adresse n°<?= $i ?></h4>
         <ul>

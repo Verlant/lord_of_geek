@@ -24,10 +24,10 @@ class C_Consultation
      *  Ajoute le jeu demandé au panier en gardant l'affichage des jeux de la page actuelle
      * @return Array
      */
-    public function ajouterAuPanier(int $idJeu, int $categorie)
+    public function ajouterAuPanier(C_Session $session, int $idJeu, int $categorie)
     {
         // Ajoute le jeu au panier s'il n'y est pas
-        if (!ajouterJeuSession($idJeu) and $idJeu > 0) {
+        if (!$session->ajouterJeuSession($idJeu) and $idJeu > 0) {
             afficheErreurs(["Ce jeu est déjà dans le panier !!"]);
         } else {
             afficheMessage("Ce jeu a été ajouté");

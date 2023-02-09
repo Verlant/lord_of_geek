@@ -33,8 +33,7 @@ class M_Client
         $res = M_AccesDonnees::prepare($req);
         M_AccesDonnees::bindParam($res, ':mail', $mail, PDO::PARAM_STR);
         M_AccesDonnees::execute($res);
-        $data = $res->fetch(PDO::FETCH_ASSOC);
-        return $data;
+        return $res->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function getInfosClientParId(int $id): array | false
@@ -43,7 +42,6 @@ class M_Client
         $res = M_AccesDonnees::prepare($req);
         M_AccesDonnees::bindParam($res, ':id', $id, PDO::PARAM_INT);
         M_AccesDonnees::execute($res);
-        $data = $res->fetch(PDO::FETCH_ASSOC);
-        return $data;
+        return $res->fetch(PDO::FETCH_ASSOC);
     }
 }

@@ -6,7 +6,7 @@
  */
 switch ($action) {
     case 'passerCommande':
-        $n = nbJeuxDuPanier();
+        $n = $session->nbJeuxDuPanier();
         if ($n > 0) {
             $nom = '';
             $rue = '';
@@ -29,9 +29,9 @@ switch ($action) {
             // Si une erreur, on recommence
             afficheErreurs($errors);
         } else {
-            $lesIdJeu = getLesIdJeuxDuPanier();
+            $lesIdJeu = $session->getLesIdJeuxDuPanier();
             M_Commande::creerCommande($nom, $rue, $cp, $ville, $mail, $lesIdJeu);
-            supprimerPanier();
+            $session->supprimerPanier();
             afficheMessage("Commande enregistrée");
             $uc = '';
         }
@@ -42,11 +42,11 @@ switch ($action) {
 class C_PasserCommande
 {
 
-    public function actionPasserCommande(String $action)
+    public function actionPasserCommande(C_Session $session, String $action)
     {
         switch ($action) {
             case 'passerCommande':
-                $n = nbJeuxDuPanier();
+                $n = $session->nbJeuxDuPanier();
                 if ($n > 0) {
                     $nom = '';
                     $rue = '';
@@ -69,9 +69,9 @@ class C_PasserCommande
                     // Si une erreur, on recommence
                     afficheErreurs($errors);
                 } else {
-                    $lesIdJeu = getLesIdJeuxDuPanier();
+                    $lesIdJeu = $session->getLesIdJeuxDuPanier();
                     M_Commande::creerCommande($nom, $rue, $cp, $ville, $mail, $lesIdJeu);
-                    supprimerPanier();
+                    $session->supprimerPanier();
                     afficheMessage("Commande enregistrée");
                     $uc = '';
                 }

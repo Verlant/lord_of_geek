@@ -7,19 +7,19 @@ class C_GestionPanier
      * Supprime un jeu du panier
      * @return void
      */
-    public function supprimerUnJeu(int $idJeu)
+    public function supprimerUnJeu(C_Session $session, int $idJeu)
     {
-        retirerDuPanier($idJeu);
+        $session->retirerDuPanier($session, $idJeu);
     }
 
     /**
      * Affiche les jeux contenus dans le panier
      * @return Array
      */
-    public function voirPanier(array $desIdJeu)
+    public function voirPanier(C_Session $session, array $desIdJeu)
     {
         $lesJeuxDuPanier = [];
-        $n = nbJeuxDuPanier();
+        $n = $session->nbJeuxDuPanier();
         if ($n > 0) {
             $lesJeuxDuPanier = M_Exemplaire::trouveLesJeuxDuTableau($desIdJeu);
         } else {

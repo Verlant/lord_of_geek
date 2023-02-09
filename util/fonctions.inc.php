@@ -1,88 +1,6 @@
 ﻿<?php
 
 /**
- * Initialise le panier
- *
- * Crée une variable de type session dans le cas
- * où elle n'existe pas 
- */
-function initPanier()
-{
-    if (!isset($_SESSION['jeux'])) {
-        $_SESSION['jeux'] = array();
-    }
-}
-
-/**
- * Supprime le panier
- * Supprime la variable de type session 
- */
-function supprimerPanier()
-{
-    unset($_SESSION['jeux']);
-}
-
-/**
- * Ajoute un jeu au panier
- *
- * Teste si l'identifiant du jeu est déjà dans la variable session 
- * ajoute l'identifiant à la variable de type session dans le cas où
- * où l'identifiant du jeu n'a pas été trouvé
- * @param $idJeu : identifiant de jeu
- * @return vrai si le jeu n'était pas dans la variable, faux sinon 
- */
-function ajouterJeuSession($idJeu)
-{
-    $ok = false;
-    if (!in_array($idJeu, $_SESSION['jeux'])) {
-        $_SESSION['jeux'][] = $idJeu;
-        $ok = true;
-    }
-    return $ok;
-}
-
-/**
- * Retourne les jeux du panier
- *
- * Retourne le tableau des identifiants de jeu
- * @return : le tableau
- */
-function getLesIdJeuxDuPanier()
-{
-    return $_SESSION['jeux'];
-}
-
-/**
- * Retourne le nombre de jeux du panier
- *
- * Teste si la variable de session existe
- * et retourne le nombre d'éléments de la variable session
- * @return : le nombre 
- */
-function nbJeuxDuPanier()
-{
-    $n = 0;
-    if (isset($_SESSION['jeux'])) {
-        $n = count($_SESSION['jeux']);
-    }
-    return $n;
-}
-
-/**
- * Retire un de jeux du panier
- *
- * Recherche l'index de l'idProduit dans la variable session
- * et détruit la valeur à ce rang
- * @param $idProduit : identifiant de jeu
-
- */
-function retirerDuPanier($idProduit)
-{
-    $index = array_search($idProduit, $_SESSION['jeux']);
-    unset($_SESSION['jeux'][$index]);
-}
-
-/**
  * Affiche une liste d'erreur
  * @param array $msgErreurs
  */
@@ -111,12 +29,12 @@ function afficheMessage(string $msg)
  * @param String $action
  * @return Array $lesJeux
  */
-function actionVisite(C_Consultation $controleur, String $action, int $idJeu, int $categorie)
+function actionVisite(C_Consultation $controleur, C_Session $session, String $action, int $idJeu, int $categorie)
 {
     if ($action == 'voirJeux') {
         $lesJeux = $controleur->voirJeux($categorie);
     } elseif ($action == 'ajouterAuPanier') {
-        $lesJeux = $controleur->ajouterAuPanier($idJeu, $categorie);
+        $lesJeux = $controleur->ajouterAuPanier($session, $idJeu, $categorie);
     } else {
         $lesJeux = $controleur->tousLesJeux();
     }
@@ -128,13 +46,13 @@ function actionVisite(C_Consultation $controleur, String $action, int $idJeu, in
  * @param String $action
  * @return Array $lesJeux
  */
-function actionPanier(C_GestionPanier $controleur, String $action, int $idJeu)
+function actionPanier(C_GestionPanier $controleur, C_Session $session, String $action, int $idJeu)
 {
     $lesJeuxDuPanier = [];
     if ($action == 'supprimerUnJeu') {
-        $controleur->supprimerUnJeu($idJeu);
+        $controleur->supprimerUnJeu($session, $idJeu);
     }
-    $desIdJeu = getLesIdJeuxDuPanier();
-    $lesJeuxDuPanier = $controleur->voirPanier($desIdJeu);
+    $desIdJeu = $session->getLesIdJeuxDuPanier();
+    $lesJeuxDuPanier = $controleur->voirPanier($session, $desIdJeu);
     return $lesJeuxDuPanier;
 }
