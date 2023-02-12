@@ -58,4 +58,35 @@ class C_Client
         // Commit la transaction
         M_AccesDonnees::commit();
     }
+
+    /**
+     * Retourne vrai si pas d'erreur
+     * Remplie le tableau d'erreur s'il y a
+     *
+     * @param $nom : chaîne
+     * @param $rue : chaîne
+     * @param $ville : chaîne
+     * @param $cp : chaîne
+     * @param $mail : chaîne
+     * @return Array : array
+     */
+    public static function adresseEstValide($nom, $rue, $ville, $cp)
+    {
+        $erreurs = [];
+        if ($nom == "") {
+            $erreurs[] = "Il faut saisir le champ Nom";
+        }
+        if ($rue == "") {
+            $erreurs[] = "Il faut saisir le champ Adresse";
+        }
+        if ($ville == "") {
+            $erreurs[] = "Il faut saisir le champ Ville";
+        }
+        if ($cp == "") {
+            $erreurs[] = "Il faut saisir le champ Code postal";
+        } else if (!estUnCp($cp)) {
+            $erreurs[] = "erreur de code postal";
+        }
+        return $erreurs;
+    }
 }

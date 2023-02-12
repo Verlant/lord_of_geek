@@ -9,7 +9,7 @@ class C_GestionPanier
      */
     public function supprimerUnJeu(C_Session $session, int $idJeu)
     {
-        $session->retirerDuPanier($session, $idJeu);
+        $session->retirerDuPanier($idJeu);
     }
 
     /**

@@ -10,22 +10,26 @@
         <li>E-mail : <?= $infosClient['mailClient'] ?></li>
     </ul>
     <h2>Adresses :</h2>
-    <?php $i = 1;
-    foreach ($adressesClient as $adresse) :
-        $nom = $adresse['nomPrenomLivraison'];
-        $rue = $adresse['adresseRueLivraison'];
-        $ville = $adresse['nomVille'];
-        $cp = $adresse['codePostal'];
-    ?>
-        <h4>Adresse n°<?= $i ?></h4>
-        <ul>
-            <li>Nom : <?= $nom ?></li>
-            <li>Rue : <?= $rue ?></li>
-            <li>Ville : <?= $ville ?></li>
-            <li>Code postal : <?= $cp ?></li>
-        </ul>
-    <?php $i++;
-    endforeach; ?>
+    <div class="flex-wrap">
+        <?php $i = 1;
+        foreach ($adressesClient as $adresse) :
+            $nom = $adresse['nomPrenomLivraison'];
+            $rue = $adresse['adresseRueLivraison'];
+            $ville = $adresse['nomVille'];
+            $cp = $adresse['codePostal'];
+        ?>
+            <div>
+                <h4>Adresse n°<?= $i ?></h4>
+                <ul>
+                    <li><span class="underline">Nom</span> : <?= $nom ?></li>
+                    <li><span class="underline">Rue</span> : <?= $rue ?></li>
+                    <li><span class="underline">Ville</span> : <?= $ville ?></li>
+                    <li><span class="underline">Code postal</span> : <?= $cp ?></li>
+                </ul>
+            </div>
+        <?php $i++;
+        endforeach; ?>
+    </div>
 
     <h3>Ajoutez une adresse :</h3>
     <div>
@@ -37,7 +41,7 @@
                     <input type="text" name="nom" id="nom">
                 </p>
                 <p>
-                    <label for="adresse">Adresse : </label>
+                    <label for="adresse">Rue : </label>
                     <input type="text" name="adresse" id="adresse">
                 </p>
                 <p>

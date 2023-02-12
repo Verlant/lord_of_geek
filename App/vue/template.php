@@ -21,7 +21,7 @@ Prototype de Lord Of Geek (LOG)
                 <li><a href="index.php?uc=accueil&action=derniersJeuxSortis"> Accueil </a></li>
                 <li><a href="index.php?uc=visite&action=voirCategories"> Voir le catalogue de jeux </a></li>
                 <li><a href="index.php?uc=panier&action=voirPanier"> Voir son panier </a></li>
-                <?php if (isset($_SESSION['pseudo'])) : ?>
+                <?php if ($session->getIdClient()) : ?>
                     <li><a href="index.php?uc=compte"> Mon compte </a></li>
                     <li><a href="index.php?uc=compte&action=deconnexion">Déconnexion</a></li>
                 <?php else : ?>

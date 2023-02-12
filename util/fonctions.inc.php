@@ -48,7 +48,6 @@ function actionVisite(C_Consultation $controleur, C_Session $session, String $ac
  */
 function actionPanier(C_GestionPanier $controleur, C_Session $session, String $action, int $idJeu)
 {
-    $lesJeuxDuPanier = [];
     if ($action == 'supprimerUnJeu') {
         $controleur->supprimerUnJeu($session, $idJeu);
     }

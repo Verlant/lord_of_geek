@@ -14,58 +14,26 @@ class M_Commande
      * Crée une commande à partir des arguments validés passés en paramètre, l'identifiant est
      * construit à partir du maximum existant ; crée les lignes de commandes dans la table contenir à partir du
      * tableau d'idProduit passé en paramètre
-     * @param $nom
-     * @param $rue
-     * @param $cp
-     * @param $ville
-     * @param $mail
-     * @param $listJeux
-
+     * @param int $client_id
+     * @param int $adresse_id
+     * @param Array $listJeux
      */
-    public static function creerCommande($nom, $rue, $cp, $ville, $mail, $listJeux)
+    public static function creerCommande($client_id, $adresse_id, $listIdJeux)
     {
-        $req = "insert into commande(nomPrenomClient, adresseRueClient, cpClient, villeClient, mailClient) values ('$nom','$rue','$cp','$ville','$mail')";
-        $res = M_AccesDonnees::exec($req);
-        $idCommande = M_AccesDonnees::getPdo()->lastInsertId();
-        foreach ($listJeux as $jeu) {
-            $req = "insert into lignes_commande(commande_id, exemplaire_id) values ('$idCommande','$jeu')";
-            $res = M_AccesDonnees::exec($req);
+        M_AccesDonnees::beginTransaction();
+        $req = "INSERT INTO commande(client_id, adresse_id) VALUES (:client_id, :adresse_id)";
+        $res = M_AccesDonnees::prepare($req);
+        M_AccesDonnees::bindParam($res, ':client_id', $client_id, PDO::PARAM_INT);
+        M_AccesDonnees::bindParam($res, ':adresse_id', $adresse_id, PDO::PARAM_INT);
+        M_AccesDonnees::execute($res);
+        $commande_id = M_AccesDonnees::lastInsertId();
+        foreach ($listIdJeux as $exemplaire_id) {
+            $req = "INSERT INTO lignes_commande(commande_id, exemplaire_id) VALUES (:commande_id, :exemplaire_id)";
+            $res = M_AccesDonnees::prepare($req);
+            M_AccesDonnees::bindParam($res, ':commande_id', $commande_id, PDO::PARAM_INT);
+            M_AccesDonnees::bindParam($res, ':exemplaire_id', $exemplaire_id, PDO::PARAM_INT);
+            M_AccesDonnees::execute($res);
         }
-    }
-
-    /**
-     * Retourne vrai si pas d'erreur
-     * Remplie le tableau d'erreur s'il y a
-     *
-     * @param $nom : chaîne
-     * @param $rue : chaîne
-     * @param $ville : chaîne
-     * @param $cp : chaîne
-     * @param $mail : chaîne
-     * @return Array : array
-     */
-    public static function estValide($nom, $rue, $ville, $cp, $mail)
-    {
-        $erreurs = [];
-        if ($nom == "") {
-            $erreurs[] = "Il faut saisir le champ nom";
-        }
-        if ($rue == "") {
-            $erreurs[] = "Il faut saisir le champ rue";
-        }
-        if ($ville == "") {
-            $erreurs[] = "Il faut saisir le champ ville";
-        }
-        if ($cp == "") {
-            $erreurs[] = "Il faut saisir le champ Code postal";
-        } else if (!estUnCp($cp)) {
-            $erreurs[] = "erreur de code postal";
-        }
-        if ($mail == "") {
-            $erreurs[] = "Il faut saisir le champ mail";
-        } else if (!estUnMail($mail)) {
-            $erreurs[] = "erreur de mail";
-        }
-        return $erreurs;
+        M_AccesDonnees::commit();
     }
 }

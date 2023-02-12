@@ -144,7 +144,54 @@ input:hover,
   background-color: #ddeeff;
 }
 
-input[type="submit"] {
+input[type="submit"],
+input[type="reset"] {
   border: #ddeeff 1px solid;
-  width: 30%;
+  width: auto;
+}
+
+/* ---------- Commande ----------------------------------------------------*/
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form-commande {
+  display: flex;
+  flex-direction: column;
+}
+
+.div-commande {
+  display: flex;
+}
+
+.label {
+  width: 100%;
+}
+
+.input-commande {
+  align-self: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+li {
+  padding: 1px;
+}
+
+/* ---------- Compte Client ----------------------------------------------------*/
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
 }

@@ -29,7 +29,7 @@ class M_AdresseLivraison
 
     public static function trouveLesAdresses(int $client_id): array | false
     {
-        $req = "SELECT DISTINCT adresseRueLivraison, nomPrenomLivraison, nomVille, codePostal
+        $req = "SELECT DISTINCT adresse_livraison.id, adresseRueLivraison, nomPrenomLivraison, nomVille, codePostal
                 FROM adresse_livraison
                     JOIN code_postal
                         ON code_postal.id = code_postal_id
