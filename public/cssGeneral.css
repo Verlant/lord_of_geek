@@ -194,11 +194,15 @@ li {
 
 #jeux_commandes {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
+  border: #353535 solid 1px;
+  border-radius: 20px;
+  padding: 10px;
 }
 
-#jeux_commandes article img {
+#jeux_commandes div img {
   height: auto;
   width: 200px;
 }
@@ -206,6 +210,18 @@ li {
 .historique-commandes {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
+}
+
+.info_commande {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.jeux_commande {
+  display: flex;
   gap: 10px;
 }
 

@@ -56,14 +56,19 @@ class M_Commande
 
     public static function listeDesCommandes(int $client_id): array | false
     {
-        $req = "SELECT commande.id AS id_commande, SUM(prixVente) FROM lignes_commande
+        $req = "SELECT commande.id AS id_commande,
+                        SUM(prixVente) as prixTotal,
+                        nomPrenomLivraison as nom,
+                        adresseRueLivraison as rue,
+                        nomVille as ville,
+                        codePostal as cp
+                FROM lignes_commande
                 JOIN commande ON commande_id = commande.id  
                 JOIN exemplaire ON exemplaire_id = exemplaire.id
-                JOIN jeux ON jeux.id = jeux_id
-                JOIN console ON console.id = console_id
-                JOIN categorie ON categorie.id = categorie_id
-                JOIN etat ON etat.id = etat_id
-                WHERE client_id = :client_id
+                JOIN adresse_livraison ON adresse_livraison.id = adresse_id
+                JOIN ville ON ville.id = ville_id
+                JOIN code_postal ON code_postal.id = code_postal_id
+                WHERE commande.client_id = :client_id
                 GROUP BY commande.id
                 ORDER BY commande.dateCreation DESC";
         $res = M_AccesDonnees::prepare($req);

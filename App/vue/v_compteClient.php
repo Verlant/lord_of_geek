@@ -60,33 +60,46 @@
         </fieldset>
     </div>
 
-    <h4>Historique des commandes : </h4>
-    <div class="historique-commandes">
+    <h3>Historique des commandes : </h3>
+    <section class="historique-commandes">
         <?php foreach ($commandes as $commande) : ?>
-            <section id="jeux_commandes">
-                <h5>Commande n°<?= $commande["id_commande"] ?></h5>
-                <?php
-                foreach ($jeuxParCommandes[$commande["id_commande"]] as $unJeu) :
-                    $description = $unJeu['nomJeux'];
-                    $prix = $unJeu['prixVente'];
-                    $image = $unJeu['imageJeux'];
-                    $etat = $unJeu['descriptionEtat'];
-                    $console = $unJeu['nomConsole'];
-                ?>
-                    <article>
-                        <?php if (empty($image)) : ?>
-                            <img src="public/images/jeux/default.png" alt="Image de <?= $description; ?>" />
-                        <?php else : ?>
-                            <img src="public/images/jeux/<?= $image; ?>" alt="Image de <?= $description; ?>" />
-                        <?php endif ?>
-                        <p>Nom : <?= $description; ?></p>
-                        <p>Console : <?= $console; ?></p>
-                        <p>&Eacute;tat : <?= $etat; ?></p>
-                        <p><?= "Prix : " . $prix . " Euros"; ?>
-                        </p>
-                    </article>
-                <?php endforeach; ?>
-            </section>
+            <article id="jeux_commandes">
+                <div class="info_commande">
+                    <h4>Commande n°<?= $commande["id_commande"] ?></h4>
+                    <div><span class="bold">Prix total</span> : <?= $commande["prixTotal"] ?> €</div>
+                    <span class="bold">Adresse livrée</span>
+                    <ul>
+                        <li><span class="underline">Nom</span> : <?= $commande["nom"] ?></li>
+                        <li><span class="underline">Rue</span> : <?= $commande["rue"] ?></li>
+                        <li><span class="underline">Ville</span> : <?= $commande["ville"] ?></li>
+                        <li><span class="underline">Code postal</span> : <?= $commande["cp"] ?></li>
+                    </ul>
+
+                </div>
+                <div class="jeux_commande">
+                    <?php
+                    foreach ($jeuxParCommandes[$commande["id_commande"]] as $unJeu) :
+                        $description = $unJeu['nomJeux'];
+                        $prix = $unJeu['prixVente'];
+                        $image = $unJeu['imageJeux'];
+                        $etat = $unJeu['descriptionEtat'];
+                        $console = $unJeu['nomConsole'];
+                    ?>
+                        <div>
+                            <?php if (empty($image)) : ?>
+                                <img src="public/images/jeux/default.png" alt="Image de <?= $description; ?>" />
+                            <?php else : ?>
+                                <img src="public/images/jeux/<?= $image; ?>" alt="Image de <?= $description; ?>" />
+                            <?php endif ?>
+                            <p>Nom : <?= $description; ?></p>
+                            <p>Console : <?= $console; ?></p>
+                            <p>&Eacute;tat : <?= $etat; ?></p>
+                            <p><?= "Prix : " . $prix . " Euros"; ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </article>
         <?php endforeach; ?>
-    </div>
+    </section>
 </div>
