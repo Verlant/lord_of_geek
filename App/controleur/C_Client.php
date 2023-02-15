@@ -89,4 +89,17 @@ class C_Client
         }
         return $erreurs;
     }
+
+    public function listeLesCommandes(C_Session $session): array
+    {
+        return M_Commande::listeDesCommandes($session->getIdClient());
+    }
+
+    public function listeLesJeuxParCommandes(array $commandes)
+    {
+        foreach ($commandes as $commande) {
+            $jeuxParCommande[$commande["id_commande"]] = M_Commande::trouveLesJeuxParCommande($commande["id_commande"]);
+        }
+        return $jeuxParCommande;
+    }
 }

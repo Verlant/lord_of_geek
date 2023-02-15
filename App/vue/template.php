@@ -59,6 +59,7 @@ Prototype de Lord Of Geek (LOG)
         }
         ?>
     </main>
+    <script src="public/main.js"></script>
 </body>
 
 </html>

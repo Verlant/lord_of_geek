@@ -61,32 +61,31 @@
     </div>
 
     <h4>Historique des commandes : </h4>
-    <div class="historique-commandes">
-        <?php foreach ($commandes as $commande) : ?>
-            <section id="jeux_commandes">
-                <h5>Commande n°<?= $commande["id_commande"] ?></h5>
-                <?php
-                foreach ($jeuxParCommandes[$commande["id_commande"]] as $unJeu) :
-                    $description = $unJeu['nomJeux'];
-                    $prix = $unJeu['prixVente'];
-                    $image = $unJeu['imageJeux'];
-                    $etat = $unJeu['descriptionEtat'];
-                    $console = $unJeu['nomConsole'];
-                ?>
-                    <article>
-                        <?php if (empty($image)) : ?>
-                            <img src="public/images/jeux/default.png" alt="Image de <?= $description; ?>" />
-                        <?php else : ?>
-                            <img src="public/images/jeux/<?= $image; ?>" alt="Image de <?= $description; ?>" />
-                        <?php endif ?>
-                        <p>Nom : <?= $description; ?></p>
-                        <p>Console : <?= $console; ?></p>
-                        <p>&Eacute;tat : <?= $etat; ?></p>
-                        <p><?= "Prix : " . $prix . " Euros"; ?>
-                        </p>
-                    </article>
-                <?php endforeach; ?>
-            </section>
-        <?php endforeach; ?>
-    </div>
+    <section id="jeux_commandes">
+        <h5>Commande n°<?= $unJeu["id_commande"] ?></h5>
+        <?php
+        foreach ($commandes as $unJeu) :
+            var_dump($unJeu);
+            $description = $unJeu['nomJeux'];
+            $prix = $unJeu['prixVente'];
+            $image = $unJeu['imageJeux'];
+            $etat = $unJeu['descriptionEtat'];
+            $console = $unJeu['nomConsole'];
+            $commande_id = $unJeu["id_commande"];
+        ?>
+            <article>
+                <?php if (empty($image)) : ?>
+                    <img src="public/images/jeux/default.png" alt="Image de <?= $description; ?>" />
+                <?php else : ?>
+                    <img src="public/images/jeux/<?= $image; ?>" alt="Image de <?= $description; ?>" />
+                <?php endif ?>
+                <p>Nom : <?= $description; ?></p>
+                <p>Console : <?= $console; ?></p>
+                <p>&Eacute;tat : <?= $etat; ?></p>
+                <p><?= "Prix : " . $prix . " Euros"; ?>
+                </p>
+            </article>
+        <?php
+        endforeach; ?>
+    </section>
 </div>

@@ -8,10 +8,6 @@ body {
   height: 25px;
 }
 
-a:target {
-  text-decoration: underline !important;
-}
-
 /* ---------- Message ----------------------------------------------------*/
 
 .erreur,
@@ -194,4 +190,27 @@ li {
   flex-wrap: wrap;
   align-items: center;
   gap: 50px;
+}
+
+#jeux_commandes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#jeux_commandes article img {
+  height: auto;
+  width: 200px;
+}
+
+.historique-commandes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- JavaScript Class ----------------------------------------------------*/
+
+.JS-active-link {
+  text-decoration: underline !important;
 }

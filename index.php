@@ -142,6 +142,8 @@ switch ($uc) {
         }
         $infosClient = $controleur->infosClient($session);
         $adressesClient = $controleur->adressesClient($session);
+        $commandes = $controleur->listeLesCommandes($session);
+        $jeuxParCommandes = $controleur->listeLesJeuxParCommandes($commandes);
         break;
     case 'connexion':
         $controleur = new C_Client();
