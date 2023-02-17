@@ -37,23 +37,13 @@ class M_Commande
         M_AccesDonnees::commit();
     }
 
-    // public static function listeDesCommandes(int $client_id): array | false
-    // {
-    //     $req = "SELECT commande.id AS id_commande, nomJeux, nomCategorie, nomConsole, descriptionEtat, imageJeux, prixVente FROM lignes_commande
-    //             JOIN commande ON commande_id = commande.id  
-    //             JOIN exemplaire ON exemplaire_id = exemplaire.id
-    //             JOIN jeux ON jeux.id = jeux_id
-    //             JOIN console ON console.id = console_id
-    //             JOIN categorie ON categorie.id = categorie_id
-    //             JOIN etat ON etat.id = etat_id
-    //             WHERE client_id = :client_id
-    //             ORDER BY commande.dateCreation DESC";
-    //     $res = M_AccesDonnees::prepare($req);
-    //     M_AccesDonnees::bindParam($res, ":client_id", $client_id, PDO::PARAM_INT);
-    //     M_AccesDonnees::execute($res);
-    //     return $res->fetchAll(PDO::FETCH_ASSOC);
-    // }
-
+    /**
+     * Effectue une requete de lecture afin de récupérer la liste des commandes
+     * effectué par un client en fonciton de son id
+     * Renvoie false en cas d'erreur
+     * @param int id client
+     * @return Array|false
+     */
     public static function listeDesCommandes(int $client_id): array | false
     {
         $req = "SELECT commande.id AS id_commande,
@@ -77,6 +67,13 @@ class M_Commande
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Effectue une requete de lecture afin de récupérer la liste des jeux commandé par un client
+     * en fonction de leur id de commande
+     * Renvoie false en cas d'erreur
+     * @param int id commande
+     * @return Array|false
+     */
     public static function trouveLesJeuxParCommande(int $id_commande): array | false
     {
         $req = "SELECT commande.id as commande_id, nomJeux, nomCategorie, nomConsole, descriptionEtat, imageJeux, prixVente

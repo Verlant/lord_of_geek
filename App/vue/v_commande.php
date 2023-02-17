@@ -25,7 +25,7 @@
                 </div>
             <?php $i++;
             endforeach; ?>
-            <input type="submit" value="Valider l'adresse de livraison" name="valider" class="input-commande">
+            <input type="submit" value="Valider l'adresse de livraison" name="valider" class="input-commande" onclick="confirm('Valider la commande ?')">
         </fieldset>
     </form>
 </section>

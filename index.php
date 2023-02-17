@@ -14,7 +14,6 @@ require 'util/fonctions.inc.php';
 require 'util/validateurs.inc.php';
 autoLoad();
 
-
 $session = new C_Session;
 
 $uc = filter_input(INPUT_GET, 'uc'); // Use Case
@@ -22,7 +21,6 @@ $action = filter_input(INPUT_GET, 'action'); // Action
 $categorie = filter_input(INPUT_GET, 'categorie'); // ID de categorie
 $idJeu = filter_input(INPUT_GET, 'jeu'); // ID de jeu
 $session->initPanier();
-
 
 // if ($formulaireRecu == "S'inscrire") {
 //     $mail = filter_input(INPUT_POST, 'mail');
@@ -78,7 +76,7 @@ if (!isset($idJeu) or empty($idJeu)) {
     $idJeu = 0;
 }
 
-// Controleur principale
+// Controleur principal
 switch ($uc) {
     case 'accueil':
         $controleur = new C_Consultation();
@@ -90,7 +88,6 @@ switch ($uc) {
     case 'visite':
         $controleur = new C_Consultation();
         $lesCategories = $controleur->getLesCategories();
-        // $lesJeux = actionVisite($controleur, $session, $action, $idJeu, $categorie);
         if ($action == 'voirJeux') {
             $lesJeux = $controleur->voirJeux($categorie);
         } elseif ($action == 'ajouterAuPanier') {
@@ -101,7 +98,6 @@ switch ($uc) {
         break;
     case 'panier':
         $controleur = new C_GestionPanier();
-        // $lesJeuxDuPanier = actionPanier($controleur, $session, $action, $idJeu);
         if ($action == 'supprimerUnJeu') {
             $controleur->supprimerUnJeu($session, $idJeu);
         }
@@ -167,6 +163,5 @@ switch ($uc) {
         exit();
         break;
 }
-
 
 require("App/vue/template.php");

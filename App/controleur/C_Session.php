@@ -3,9 +3,10 @@
 class C_Session
 {
     /**
-     * Fonction qui vérifie si le mdp est bon lors de la connexion
+     * Fonction qui vérifie si le mdp est bon lors de la connexion en fonction du mail
      * Retourne l'id de l'utilisateur en cas de réussite
      * Retourne false en cas d'échec
+     * @return int|bool
      */
     public function verifMotDePasse(String $mail, String $mdp): int
     {
@@ -23,6 +24,7 @@ class C_Session
     /**
      * Fonction qui renvoie l'id de l'utilisateur connecté via la session
      * Retourne false en cas d'échec
+     * @return int|bool
      */
     public static function getIdClient(): int | false
     {
@@ -37,9 +39,10 @@ class C_Session
      * Initialise le panier
      *
      * Crée une variable de type session dans le cas
-     * où elle n'existe pas 
+     * où elle n'existe pas
+     * @return void
      */
-    public function initPanier()
+    public function initPanier(): void
     {
         if (!isset($_SESSION['jeux'])) {
             $_SESSION['jeux'] = array();
@@ -48,9 +51,10 @@ class C_Session
 
     /**
      * Supprime le panier
-     * Supprime la variable de type session 
+     * Supprime la variable de type session
+     * @return void
      */
-    public function supprimerPanier()
+    public function supprimerPanier(): void
     {
         unset($_SESSION['jeux']);
     }
@@ -107,9 +111,9 @@ class C_Session
      * Recherche l'index de l'idProduit dans la variable session
      * et détruit la valeur à ce rang
      * @param $idProduit : identifiant de jeu
-
+     * @return void
      */
-    public function retirerDuPanier($idProduit)
+    public function retirerDuPanier($idProduit): void
     {
         $index = array_search($idProduit, $_SESSION['jeux']);
         unset($_SESSION['jeux'][$index]);

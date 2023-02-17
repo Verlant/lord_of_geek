@@ -2,8 +2,8 @@
 
 class M_AdresseLivraison
 {
-    // A modifier si une ville/code_postal est deja inscrite dans la bdd
     /**
+     * Effectue la requete d'insertion d'une adresse dans la bdd
      * @param String $adresse
      * @param String $nom
      * @param String $ville
@@ -27,6 +27,12 @@ class M_AdresseLivraison
         M_AccesDonnees::execute($res);
     }
 
+    /**
+     * Effectue une requete de lecture renvoyant
+     * la liste des adresse d'un client en fonction de son id
+     * @param int $client_id
+     * @return Array|false
+     */
     public static function trouveLesAdresses(int $client_id): array | false
     {
         $req = "SELECT DISTINCT adresse_livraison.id, adresseRueLivraison, nomPrenomLivraison, nomVille, codePostal

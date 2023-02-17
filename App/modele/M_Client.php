@@ -2,6 +2,14 @@
 
 class M_Client
 {
+    /** 
+     * Effectue la requete d'insertion des données d'un client dans la bdd
+     * @param String $mail
+     * @param String $pseudo
+     * @param String $mdp
+     * @param String $nomPrenom
+     * @return void
+     */
     public static function creerCompteClient(String $mail, String $pseudo, String $mdp, String $nomPrenom): void
     {
         $req = "INSERT INTO client (mailClient, pseudoClient, motDePasse, nomPrenomClient)
@@ -27,6 +35,13 @@ class M_Client
     //     return M_AccesDonnees::lastInsertId();
     // }
 
+    /**
+     * Effectue une requete de lecture en fonction de l'adresse mail d'un client afin de récupérer son id pseudo et mdp
+     * Utilisé uniquement par le controleur de session lors de la connexion d'un utilisateur au site
+     * renvoie false en cas d'erreur
+     * @param String $mail
+     * @return Array|false
+     */
     public static function getInfoClientPourSession(String $mail): array | false
     {
         $req = "SELECT id, pseudoClient, motDePasse FROM client WHERE mailClient = :mail";
@@ -36,6 +51,12 @@ class M_Client
         return $res->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Effectue une requete de lecture a la bdd afin de renvoyer les infos d'un client en fonction de son id
+     * Renvoie false en cas d'erreur
+     * @param int $id
+     * @return Array|false
+     */
     public static function getInfosClientParId(int $id): array | false
     {
         $req = "SELECT mailClient, pseudoClient, nomPrenomClient FROM client WHERE id = :id";

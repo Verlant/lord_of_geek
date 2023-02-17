@@ -65,13 +65,6 @@ class M_AccesDonnees
         $statement->bindParam($marque, $valeur, $pdo_param);
     }
 
-    // public static function bindAllParam(PDOStatement $statement, array $params)
-    // {
-    //     foreach ($params as $key => $value) {
-    //         $statement->bindParam($key, $value);
-    //     }
-    // }
-
     /**
      * Execute une requete préparé
      * @return void
@@ -83,6 +76,7 @@ class M_AccesDonnees
 
     /**
      * Récupère l'id du dernier insert
+     * @return int|false
      */
     public static function lastInsertId(): int | false
     {
